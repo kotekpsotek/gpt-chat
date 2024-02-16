@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import General from './components/General.vue';
     
-    let api = "";
+    let api = "http://localhost:5454";
 </script>
 
 <template>

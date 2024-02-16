@@ -15,6 +15,9 @@
     })
 
     async function sendQuestion() {
+        const apiUrl = new URL(props.api);
+        apiUrl.pathname = "/question"
+        
         const f = await fetch(props.api, {
             method: "POST",
             headers: {
