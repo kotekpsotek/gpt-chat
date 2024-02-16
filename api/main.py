@@ -1,4 +1,6 @@
 from flask import Flask, jsonify, request
+from time import sleep
+from .llm.main import gpt_2_neo
 
 app = Flask(__name__, template_folder="static")
 
@@ -7,12 +9,10 @@ def question():
     question = request.json
 
     if len(question):
-        answer = "" # Fill this field
-
-        # TODO: Here should be AI Generative LLM model processing output
+        answer = gpt_2_neo(question) # Fill this field
         
         return jsonify({
-            answer
+            "answer": answer
         }), 200
     else:
         return 400

@@ -1,6 +1,6 @@
 from transformers import pipeline
 
-def process_gpt_2_neo(prompt: str):
+def gpt_2_neo(prompt: str):
     # Load pipeline
     generator = pipeline('text-generation', model='EleutherAI/gpt-neo-1.3B')
     
@@ -11,5 +11,5 @@ def process_gpt_2_neo(prompt: str):
     return answer[0]["generated_text"]
 
 if __name__ == "__main__":
-    answer = process_gpt_2_neo("What is the differenece between Lockeed Martin and Boeing?")
+    answer = gpt_2_neo("What is the differenece between Lockeed Martin and Boeing?")
     print(answer)
