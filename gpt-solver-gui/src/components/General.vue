@@ -17,13 +17,14 @@
     async function sendQuestion() {
         const apiUrl = new URL(props.api);
         apiUrl.pathname = "/question"
+        console.log(apiUrl.toString())
         
-        const f = await fetch(props.api, {
+        const f = await fetch(apiUrl.toString(), {
             method: "POST",
             headers: {
                 'content-type': "application/json"
             },
-            body: JSON.stringify({ question })
+            body: JSON.stringify({ question: question.value })
         });
 
         if (f.status == 200) {

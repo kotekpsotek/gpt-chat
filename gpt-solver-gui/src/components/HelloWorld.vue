@@ -3,6 +3,13 @@ import { ref } from 'vue'
 
 defineProps<{ msg: string }>()
 
+  const id = "1";
+  const atributes = {
+    class: "hello",
+    "data-storage": "11"
+  }
+  const display = ref(false);
+
 const count = ref(0)
 </script>
 
@@ -16,8 +23,10 @@ const count = ref(0)
       <code>components/HelloWorld.vue</code> to test HMR
     </p>
   </div>
-
-  <p>
+  <div style="color: red;">
+    <span>{{ "hello world".replace(/\s{1,}/g, "-").toUpperCase() }}</span>
+  </div>
+  <p :id="id" v-bind="atributes">
     Check out
     <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
       >create-vue</a

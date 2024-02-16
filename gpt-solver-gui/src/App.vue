@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import General from './components/General.vue';
+    import HelloWorld from './components/HelloWorld.vue';
     
     let api = "http://localhost:5454";
 </script>
@@ -15,6 +16,7 @@
   </div>
   <HelloWorld msg="Vite + Vue" /> -->
   <General v-bind:api="api"/>
+  <!-- <HelloWorld msg="Hello"/> -->
 </template>
 
 <style scoped>
