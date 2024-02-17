@@ -12,4 +12,8 @@ body {
   .card {
     @apply bg-white p-4 rounded-md border border-solid border-black;
   }
+
+  .s-question {
+    @apply border border-2 border-rose-900 rounded-sm p-1;
+  }
 }

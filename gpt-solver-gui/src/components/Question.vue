@@ -31,7 +31,7 @@
 </script>
 
 <template>
-    <div id="question" class="flex justify-between w-full" @click="handleClick">
+    <div id="question" class="flex justify-between w-full cursor-pointer" :class="displayHistoricalQuestion.whichDisplay?.date_timestamp == props.singleQuestion.date_timestamp ? 's-question' : ''" @click="handleClick">
         <p class="max-w-2/5 truncate">{{ props.singleQuestion.question }}</p>
         <p id="time-difference" class="text-xs text-gray-700 text-end">{{ formatterDate.format(props.singleQuestion.date_timestamp) }}</p>
     </div>
