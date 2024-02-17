@@ -3,6 +3,7 @@
     import Answering from "../assets/answering.svg";
     import BotProfile from "../assets/bot_profile.jpg";
     import APIStorage, { QuestionsStorage } from '../api';
+    import { displayHistoricalQuestion } from '../api/reactivity';
 
     let myId = "desc";
 
@@ -103,11 +104,11 @@
             <p>Answering</p>
             <img v-bind:src="Answering" alt="Loading...">
         </div>
-        <div class="card w-3/5" v-if="answer.length">
+        <div class="card w-3/5" v-if="answer.length || displayHistoricalQuestion.display">
             <div class="flex items-start justify-start">
                 <img :src="BotProfile" class="rounded-full" width="40px" height="40px">
                 <div id="answer" class="flex items-center overflow-y-auto" style="max-height: 200px;">
-                    <p>{{ answer }}</p>
+                    <p>{{ answer.length ? answer : displayHistoricalQuestion.whichDisplay }}</p>
                 </div>
             </div>
         </div>
