@@ -2,7 +2,7 @@
     import { ref, defineProps } from 'vue';
     import Answering from "../assets/answering.svg";
     import BotProfile from "../assets/bot_profile.jpg";
-    import { QuestionsStorage } from '../api';
+    import APIStorage, { QuestionsStorage } from '../api';
 
     let myId = "desc";
 
@@ -21,7 +21,7 @@
             durningAnswering.value = true;
             answer.value = "";
     
-            props.questions.questions.push({
+            props.questions.questions.unshift({
                 date_timestamp: Date.now(),
                 answer: "Test answer: I have recived your question!",
                 question: question.value
@@ -54,6 +54,9 @@
             else alert("Cannot make request for datas!");
     
             durningAnswering.value = false; */
+
+            // Resave Questions
+            APIStorage.setStorageQuestions(props.questions);
         }
         catch(err) {
             durningAnswering.value = false;
