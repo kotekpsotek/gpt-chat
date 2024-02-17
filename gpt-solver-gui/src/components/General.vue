@@ -2,6 +2,7 @@
     import { ref, defineProps } from 'vue';
     import Answering from "../assets/answering.svg";
     import BotProfile from "../assets/bot_profile.jpg";
+    import { QuestionsStorage } from '../api';
 
     let myId = "desc";
 
@@ -10,21 +11,24 @@
     const durningAnswering = ref(false);
 
     // define props using a type literal
-    const props = defineProps({
-        api: {
-            type: String,
-            required: true
-        }
-    })
+    const props = defineProps<{
+        api: string,
+        questions: QuestionsStorage
+    }>()
 
     async function sendQuestion() {
         try { 
             durningAnswering.value = true;
             answer.value = "";
     
+            /* props.questions.questions.push({
+                date_timestamp: Date.now(),
+                answer: "Test answer: I have recived your question!",
+                question: question.value
+            }) */
+            
             const apiUrl = new URL(props.api);
             apiUrl.pathname = "/question"
-            console.log(apiUrl.toString())
             
             const f = await fetch(apiUrl.toString(), {
                 method: "POST",
@@ -36,7 +40,16 @@
     
             if (f.status == 200) {
                 const { answer: a } = (await f.json())
+
+                // Add answer for answer field
                 answer.value = a
+
+                // Add question to questions list (for Timeline)
+                props.questions.questions.push({
+                    date_timestamp: Date.now(), // Date from answer time
+                    answer: a,
+                    question: question.value
+                });
             }
             else alert("Cannot make request for datas!");
     

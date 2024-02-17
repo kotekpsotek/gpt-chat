@@ -1,5 +1,6 @@
 interface Question {
-    content: string,
+    question: string,
+    answer: string,
     date_timestamp: number
 }
 

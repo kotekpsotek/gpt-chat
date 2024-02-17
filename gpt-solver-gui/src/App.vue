@@ -22,7 +22,7 @@
   </div>
   <HelloWorld msg="Vite + Vue" /> -->
   <div class="flex h-screen w-screen justify-center items-center">
-    <General v-bind:api="api"/>
+    <General v-bind:api="api" :questions="questions"/>
     <QuestionList :questions="questions"/>
   </div>
 
