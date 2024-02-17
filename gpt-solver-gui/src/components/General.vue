@@ -4,6 +4,7 @@
     import BotProfile from "../assets/bot_profile.jpg";
     import APIStorage, { QuestionsStorage } from '../api';
     import { displayHistoricalQuestion } from '../api/reactivity';
+    import CloseFilled from '@carbon/icons-vue/es/close--filled/32';
 
     let myId = "desc";
 
@@ -87,6 +88,12 @@
         }
         else alert("Ohhh noooo! You did not ask about anything!")
     }
+
+    function closeAnswer() {
+        // Reset display question from past
+        displayHistoricalQuestion.value.display = false;
+        displayHistoricalQuestion.value.whichDisplay = undefined;
+    }
 </script>
 
 <template>
@@ -104,7 +111,10 @@
             <p>Answering</p>
             <img v-bind:src="Answering" alt="Loading...">
         </div>
-        <div class="card w-3/5" v-if="answer.length || displayHistoricalQuestion.display">
+        <div class="card w-3/5 relative" v-if="answer.length || displayHistoricalQuestion.display">
+            <button class="close-btn" v-if="displayHistoricalQuestion.display" @click="closeAnswer">
+                <CloseFilled aria-label="CloseFilled" class="custom-class"/>
+            </button>
             <div class="flex items-start justify-start">
                 <img :src="BotProfile" class="rounded-full" width="40px" height="40px">
                 <div id="answer" class="flex items-center overflow-y-auto" style="max-height: 200px;">
@@ -114,3 +124,13 @@
         </div>
     </div>
 </template>
+
+<style>
+    .close-btn {
+        @apply rounded-full border border-black;
+        position: absolute;
+        right: -10px;
+        top: -10px;
+        background-color: white;
+    }
+</style>
