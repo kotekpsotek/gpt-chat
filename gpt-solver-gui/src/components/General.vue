@@ -9,6 +9,7 @@
     const question = ref("");
     const answer = ref("");
     const durningAnswering = ref(false);
+    const interactionFieldsDisabled = ref(false);
 
     // define props using a type literal
     const props = defineProps<{
@@ -17,50 +18,73 @@
     }>()
 
     async function sendQuestion() {
-        try { 
-            durningAnswering.value = true;
-            answer.value = "";
+        if (question.value.length) {
+            try {
+                // Disable giving question by answer will have come
+                interactionFieldsDisabled.value = true;
     
-            props.questions.questions.unshift({
-                date_timestamp: Date.now(),
-                answer: "Test answer: I have recived your question!",
-                question: question.value
-            })
-            
-           /*  const apiUrl = new URL(props.api);
-            apiUrl.pathname = "/question"
-            
-            const f = await fetch(apiUrl.toString(), {
-                method: "POST",
-                headers: {
-                    'content-type': "application/json"
-                },
-                body: JSON.stringify({ question: question.value })
-            });
+                // That App is durning answering
+                durningAnswering.value = true;
     
-            if (f.status == 200) {
-                const { answer: a } = (await f.json())
-
-                // Add answer for answer field
-                answer.value = a
-
-                // Add question to questions list (for Timeline)
-                props.questions.questions.push({
-                    date_timestamp: Date.now(), // Date from answer time
-                    answer: a,
-                    question: question.value
+                // Clear previous answer stage what also will cause hideing that
+                answer.value = "";
+                
+                const apiUrl = new URL(props.api);
+                apiUrl.pathname = "/question"
+                
+                const f = await fetch(apiUrl.toString(), {
+                    method: "POST",
+                    headers: {
+                        'content-type': "application/json"
+                    },
+                    body: JSON.stringify({ question: question.value })
                 });
-            }
-            else alert("Cannot make request for datas!");
+        
+                if (f.status == 200) {
+                    const { answer: a } = (await f.json())
     
-            durningAnswering.value = false; */
-
-            // Resave Questions
-            APIStorage.setStorageQuestions(props.questions);
+                    // Add answer for answer field
+                    answer.value = a
+    
+                    // Add question to questions list (for Timeline)
+                    props.questions.questions.unshift({
+                        date_timestamp: Date.now(), // Date from answer time
+                        answer: a,
+                        question: question.value
+                    });
+    
+                    // FIXME: Only for test purposes. Pass on a first place new question on questions list 
+                    /* props.questions.questions.unshift({
+                        date_timestamp: Date.now(),
+                        answer: "Test answer: I have recived your question!",
+                        question: question.value
+                    }) */
+     
+                }
+                else alert("Cannot make request for datas!");
+        
+                durningAnswering.value = false;
+    
+                // FIXME: Only for test cases
+                /* setTimeout(() => {
+                    interactionFieldsDisabled.value = false;
+                }, 5_000) */
+    
+                // Make interaction field enabled again
+                interactionFieldsDisabled.value = false;  
+    
+                // Resave Questions
+                APIStorage.setStorageQuestions(props.questions);
+            }
+            catch(err) {
+                // Signal, isn't durning answering process
+                durningAnswering.value = false;
+    
+                // Make interaction field enabled again
+                interactionFieldsDisabled.value = false;  
+            }
         }
-        catch(err) {
-            durningAnswering.value = false;
-        }
+        else alert("Ohhh noooo! You did not ask about anything!")
     }
 </script>
 
@@ -70,9 +94,9 @@
             <h1 class="text-2xl font-semibold">Chat with GPT</h1>
             <p :id="myId" class="font-protestRiot text-gray-500">I'm happy to let you clear a unclear!</p>
             <div id="trigger" class="flex flex-col gap-2 mt-3">
-                <textarea id="question" class="bg-slate-200 p-2 rounded-sm" style="resize: none;" placeholder="How do you feel?" cols="30" rows="10" wrap="soft" v-model="question">
+                <textarea id="question" class="bg-slate-200 p-2 rounded-sm disabled:cursor-none" style="resize: none;" placeholder="How do you feel?" cols="30" rows="10" wrap="soft" v-model="question" :disabled="interactionFieldsDisabled">
                 </textarea>
-                <button @click="sendQuestion" class="w-full p-2 text-black font-semibold border-2 border-black rounded-md hover:bg-black hover:text-white transition-all duration-150">Ask</button>
+                <button @click="sendQuestion" class="w-full p-2 text-black font-semibold border-2 border-black rounded-md hover:bg-black hover:text-white transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-80" :disabled="interactionFieldsDisabled">Ask</button>
             </div>
         </div>
         <div v-if="durningAnswering" class="flex gap-x-2">
