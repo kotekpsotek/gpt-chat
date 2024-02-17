@@ -5,7 +5,7 @@ interface Question {
 
 type QuestionList = Question[];
 
-interface QuestionsStorage {
+export interface QuestionsStorage {
     questions: QuestionList
 }
 

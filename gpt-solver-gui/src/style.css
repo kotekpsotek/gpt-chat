@@ -7,3 +7,9 @@
 body {
   @apply bg-slate-300 w-screen h-screen font-inter;
 }
+
+@layer components {
+  .card {
+    @apply bg-white p-4 rounded-md border border-solid border-black;
+  }
+}

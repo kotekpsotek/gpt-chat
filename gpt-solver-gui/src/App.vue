@@ -1,8 +1,14 @@
 <script setup lang="ts">
     import General from './components/General.vue';
     import HelloWorld from './components/HelloWorld.vue';
+    import QuestionList from './components/QuestionList.vue';
+
+    import { ref } from 'vue';
+    import APIStorage from "./api";
     
     let api = "http://localhost:5454";
+
+    const questions = ref(APIStorage.getStorageQuestions());
 </script>
 
 <template>
@@ -15,7 +21,11 @@
     </a>
   </div>
   <HelloWorld msg="Vite + Vue" /> -->
-  <General v-bind:api="api"/>
+  <div class="flex h-screen w-screen justify-center items-center">
+    <General v-bind:api="api"/>
+    <QuestionList :questions="questions"/>
+  </div>
+
   <!-- <HelloWorld msg="Hello"/> -->
 </template>
 

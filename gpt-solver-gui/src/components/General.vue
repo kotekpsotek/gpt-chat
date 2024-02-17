@@ -6,7 +6,7 @@
     let myId = "desc";
 
     const question = ref("");
-    const answer = ref("Hi there");
+    const answer = ref("");
     const durningAnswering = ref(false);
 
     // define props using a type literal
@@ -50,7 +50,7 @@
 
 <template>
     <div class="wrapper w-screen h-screen flex flex-col gap-4 justify-center items-center">
-        <div class="card">
+        <div class="card w-3/5">
             <h1 class="text-2xl font-semibold">Chat with GPT</h1>
             <p :id="myId" class="font-protestRiot text-gray-500">I'm happy to let you clear a unclear!</p>
             <div id="trigger" class="flex flex-col gap-2 mt-3">
@@ -63,7 +63,7 @@
             <p>Answering</p>
             <img v-bind:src="Answering" alt="Loading...">
         </div>
-        <div class="card" v-if="answer.length">
+        <div class="card w-3/5" v-if="answer.length">
             <div class="flex items-start justify-start">
                 <img :src="BotProfile" class="rounded-full" width="40px" height="40px">
                 <div id="answer" class="flex items-center overflow-y-auto" style="max-height: 200px;">
@@ -73,9 +73,3 @@
         </div>
     </div>
 </template>
-
-<style>
-    .card {
-        @apply bg-white p-4 rounded-md w-3/5 border border-solid border-black;
-    }
-</style>
