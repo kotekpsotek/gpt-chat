@@ -21,13 +21,13 @@
             durningAnswering.value = true;
             answer.value = "";
     
-            /* props.questions.questions.push({
+            props.questions.questions.push({
                 date_timestamp: Date.now(),
                 answer: "Test answer: I have recived your question!",
                 question: question.value
-            }) */
+            })
             
-            const apiUrl = new URL(props.api);
+           /*  const apiUrl = new URL(props.api);
             apiUrl.pathname = "/question"
             
             const f = await fetch(apiUrl.toString(), {
@@ -53,7 +53,7 @@
             }
             else alert("Cannot make request for datas!");
     
-            durningAnswering.value = false;
+            durningAnswering.value = false; */
         }
         catch(err) {
             durningAnswering.value = false;
