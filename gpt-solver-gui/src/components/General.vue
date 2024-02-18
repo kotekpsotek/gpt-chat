@@ -111,14 +111,14 @@
             <p>Answering</p>
             <img v-bind:src="Answering" alt="Loading...">
         </div>
-        <div class="card w-3/5 relative" v-if="answer.length || displayHistoricalQuestion.display">
+        <div class="card w-3/5 relative"  v-if="answer.length || displayHistoricalQuestion.display">
             <button class="close-btn" v-if="displayHistoricalQuestion.display" @click="closeAnswer">
                 <CloseFilled aria-label="CloseFilled" class="custom-class"/>
             </button>
-            <div class="flex items-start justify-start">
+            <div class="flex items-start relative justify-start overflow-y-auto" style="height: 250px;">
                 <img :src="BotProfile" class="rounded-full" width="40px" height="40px">
-                <div id="answer" class="flex items-center overflow-y-auto" style="max-height: 200px;">
-                    <p>{{ answer.length ? answer : displayHistoricalQuestion.whichDisplay }}</p>
+                <div id="answer" class="flex items-center">
+                    <p>{{ answer.length ? answer : displayHistoricalQuestion.whichDisplay?.answer }}</p>
                 </div>
             </div>
         </div>
